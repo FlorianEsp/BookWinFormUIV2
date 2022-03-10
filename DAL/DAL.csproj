@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Connection.cs" />
     <Compile Include="DalServices.cs" />
+    <Compile Include="Interfaces\IDalServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

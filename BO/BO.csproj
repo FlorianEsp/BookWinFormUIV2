@@ -44,6 +44,8 @@
     <Compile Include="Book.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="DtoBooks.cs" />
+    <Compile Include="Interfaces\ICountry.cs" />
+    <Compile Include="Interfaces\IBook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

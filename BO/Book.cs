@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BO.Interfaces;
+using System;
 
 namespace BO
 {
-    public class Book
+    public class Book : IBook
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -15,5 +12,10 @@ namespace BO
         public string Description { get; set; }
         public int CountryId { get; set; }
         public DateTime DatePublished { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ Id} { Title} { Author} { Price} { Description} {CountryId} {DatePublished }";
+        }
     }
 }

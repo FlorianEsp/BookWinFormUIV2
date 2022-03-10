@@ -2,16 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Dapper;
+using BO.Interfaces;
+using DAL.Interfaces;
+
 namespace DAL
 {
-    public class DalServices
+    public class DalServices : IDalServices
     {
-        public List<Country> GetCountries()
+        public IEnumerable<ICountry> GetCountries()
         {
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
@@ -19,7 +20,7 @@ namespace DAL
                 return countries;
             }
         }
-        public void AddBook(Book book)
+        public void AddBook(IBook book)
         {
             DynamicParameters param = new DynamicParameters();
             param.Add("@Title", book.Title);
@@ -41,15 +42,16 @@ namespace DAL
                 }
             }
         }
-        public void GetBooks()
+        public IEnumerable<IBook> GetBooks()
         {
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
-               var books = connection.Query<Book>("spGetAllBooks");
-           
+                var books = connection.Query<Book>("spGetAllBooks", commandType: CommandType.StoredProcedure).ToList();
+               
+                return books;
             }
         }
-        public List<DtoBooks> GetBooksByCountry(int Id)
+        public IEnumerable<DtoBooks> GetBooksByCountry(int Id)
         {
             DynamicParameters param = new DynamicParameters();
             param.Add("@id", Id);
@@ -69,7 +71,7 @@ namespace DAL
         {
             DynamicParameters param = new DynamicParameters();
             param.Add("@LogMessage", message);
-           
+
 
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
@@ -83,17 +85,5 @@ namespace DAL
                 }
             }
         }
-        public void UpdateBooks()
-        {
-            string sqlUpdate = "Update Book set Title = 'New' where country = 1 ";
-           
-            using (IDbConnection conn = new SqlConnection(Connection.GetConnection("Books")))
-            {
-               
-              
-
-            }
-        }
-
     }
 }

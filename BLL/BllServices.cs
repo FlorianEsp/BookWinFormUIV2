@@ -1,58 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BLL.Interfaces;
 using BO;
+using BO.Interfaces;
 using DAL;
+using DAL.Interfaces;
 
 namespace BLL
 {
-    public class BllServices
+    public class BllServices : IBllServices
     {
-        DalServices ds = new DalServices();
-        
-        public List<Country> GetCountries()
+        readonly IDalServices ds = new DalServices();
+        public IEnumerable<ICountry> GetCountries()
         {
             var countries = ds.GetCountries();
             return countries;
         }
-
-        public bool AddBook(Book book)
+        public bool AddBook(IBook book)
         {
             bool ok = false;
             try
             {
-              
                 if (book.DatePublished < DateTime.Now)
                 {
                     ds.AddBook(book);
-                    ok = true;  
-                    return ok ;
+                    ok = true;
+                    return ok;
                 }
             }
             catch (Exception)
             {
-                ok = false;
-                throw; 
+
+                throw;
             }
-            return ok;  
-           
+            return ok;
         }
-        public List<Book> GetBooks()
+        public IEnumerable<IBook> GetBooks()
         {
             var books = ds.GetBooks();
             return books;
-           
         }
-        public List<DtoBooks> GetBooksByCountry(int Id)
+        public IEnumerable<DtoBooks> GetBooksByCountry(int Id)
         {
             return ds.GetBooksByCountry(Id);
 
         }
         public void AddLog(string message)
         {
-            ds.AddLog(message); 
+            ds.AddLog(message);
         }
     }
 }

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
+using BLL.Interfaces;
 using BO;
+using BO.Interfaces;
 
 namespace BookWinFormUI
 {
     public partial class Form1 : Form
     {
+        IBllServices bllServices = new BllServices();
         public Form1()
         {
             InitializeComponent();
@@ -21,26 +17,26 @@ namespace BookWinFormUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            BllServices bllServices = new BllServices();
+           
             var allCountries = bllServices.GetCountries();
             cmbCountry.DataSource = allCountries;
-       
+            dtgData.DataSource = bllServices.GetBooks();
         }
 
         private void btnAddBook_Click(object sender, EventArgs e)
         {
-            BllServices bllServices = new BllServices();
+
             try
             {
              
-
-                Book newbook = new Book();
+                IBook newbook = new Book();
                 newbook.Title = txtTitle.Text;
                 newbook.Author = txtAuthor.Text;
                 newbook.Description = txtDescription.Text;
                 newbook.Price = Convert.ToDecimal(txtPrice.Text);
                 newbook.DatePublished = Convert.ToDateTime(dtpDatePublished.Text);
                 newbook.CountryId = cmbCountry.SelectedIndex + 1;
+
                 if (bllServices.AddBook(newbook))
                 {
                     MessageBox.Show("Record added to the Database");
@@ -53,22 +49,20 @@ namespace BookWinFormUI
             }
             catch (Exception ex)
             {
-               BllServices bll = new BllServices();
+                IBllServices bll = new BllServices();
                 bll.AddLog(ex.Message);
                 MessageBox.Show(ex.Message);
-         
+
             }
-
-            dtgData.DataSource = bllServices.GetBooks();
         }
-
         private void btnBookPerCountry_Click(object sender, EventArgs e)
         {
-            BllServices bll = new BllServices();
-           var list =  bll.GetBooksByCountry(cmbCountry.SelectedIndex+1);
+       
+            var index =cmbCountry.SelectedIndex + 1;    
+            var list = bllServices.GetBooksByCountry(index);
             dtgData.DataSource = null;
-           dtgData.DataSource = list;
-            
+            dtgData.DataSource = list;
+
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
