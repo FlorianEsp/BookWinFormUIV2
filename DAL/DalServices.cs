@@ -20,6 +20,7 @@ namespace DAL
                 return countries;
             }
         }
+
         public void AddBook(IBook book)
         {
             DynamicParameters param = new DynamicParameters();
@@ -36,21 +37,22 @@ namespace DAL
                 {
                     connection.Execute("spAddNewBook", param, commandType: CommandType.StoredProcedure);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw ex;
+                    throw;
                 }
             }
         }
+
         public IEnumerable<IBook> GetBooks()
         {
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
                 var books = connection.Query<Book>("spGetAllBooks", commandType: CommandType.StoredProcedure).ToList();
-               
                 return books;
             }
         }
+
         public IEnumerable<DtoBooks> GetBooksByCountry(int Id)
         {
             DynamicParameters param = new DynamicParameters();
@@ -67,11 +69,11 @@ namespace DAL
                 return books;
             }
         }
+
         public void AddLog(string message)
         {
             DynamicParameters param = new DynamicParameters();
             param.Add("@LogMessage", message);
-
 
             using (IDbConnection connection = new SqlConnection(Connection.GetConnection("Books")))
             {
@@ -79,9 +81,9 @@ namespace DAL
                 {
                     connection.Execute("spLog", param, commandType: CommandType.StoredProcedure);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw ex;
+                    throw;
                 }
             }
         }
