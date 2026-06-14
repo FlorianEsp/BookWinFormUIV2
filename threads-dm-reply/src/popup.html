@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Threads DM Quick Reply</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="head">
+    <h1>Réponses rapides</h1>
+    <a id="open-options" href="#" class="link">Options</a>
+  </header>
+
+  <section class="toggles">
+    <label class="row">
+      <input type="checkbox" id="enabled" />
+      <span>Afficher la barre dans les DM</span>
+    </label>
+    <label class="row">
+      <input type="checkbox" id="autoSend" />
+      <span>Envoyer automatiquement après insertion</span>
+    </label>
+  </section>
+
+  <section>
+    <h2>Modèles</h2>
+    <ul id="list" class="list"></ul>
+    <p id="empty" class="empty" hidden>Aucun modèle pour l'instant.</p>
+  </section>
+
+  <section class="add">
+    <input type="text" id="new-label" placeholder="Libellé (ex : Salutation)" maxlength="40" />
+    <textarea id="new-text" placeholder="Texte de la réponse…" rows="2" maxlength="1000"></textarea>
+    <button id="add" type="button">Ajouter le modèle</button>
+  </section>
+
+  <script src="storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
