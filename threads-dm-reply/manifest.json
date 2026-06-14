@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Threads DM Quick Reply",
+  "version": "1.0.0",
+  "description": "Répondez plus vite aux messages privés (DM) de Threads grâce à des modèles de réponses rapides injectés directement dans le fil de discussion.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://www.threads.net/*",
+    "https://threads.net/*",
+    "https://www.threads.com/*",
+    "https://threads.com/*",
+    "https://api.deepseek.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "Threads DM Quick Reply",
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.threads.net/*",
+        "https://threads.net/*",
+        "https://www.threads.com/*",
+        "https://threads.com/*"
+      ],
+      "js": ["src/storage.js", "src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
